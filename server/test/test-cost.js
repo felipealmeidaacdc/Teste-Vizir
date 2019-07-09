@@ -10,6 +10,28 @@ chai.use(chaiHttp);
 
 describe('Api Costs', () => {
 
+    //testando valores incorretos
+    describe('/POST', () => {
+        it('Registra novos Custos', (done) => {
+            chai
+                .request(app)
+                .post('/costs')
+                .send({
+                    source_code: '011',
+                    target_code: '017',
+                    value: '1.70'
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('source_code').eql('90');
+                    res.body.should.have.property('target_code').eql('30');
+                    res.body.should.have.property('value').eql('1.73');
+                    done();
+                });
+        });
+          
+    });
   
 
     describe('/GET', () => {
